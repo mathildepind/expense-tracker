@@ -1,6 +1,8 @@
 import React from 'react';
-import Form from './Form';
+
 import Display from './Display';
+import ExpenseItem from './ExpenseItem';
+import Form from './Form';
 
 class App extends React.Component {
   constructor(){
@@ -10,62 +12,77 @@ class App extends React.Component {
     };
 
     this.handleClickReceiver = this.handleClickReceiver.bind(this);
-    this.displayReceiver = this.displayReceiver.bind(this);
+    this.displaySetState = this.displaySetState.bind(this);
   }
 
 
-  handleClickReceiver(date,amount,item){
-    console.log("localStorage length: " + window.localStorage.length);
+  handleClickReceiver(date,inputdate,amount,item){
+    // console.log("localStorage length: " + window.localStorage.length);
     let newExpenseId = window.localStorage.length + 1;
-    console.log("newExpenseId: " + newExpenseId);
+    // console.log("newExpenseId: " + newExpenseId);
     const expenseJson = JSON.stringify({
       'date': date,
+      'inputdate': inputdate,
       'amount': amount,
       'description': item});
     window.localStorage.setItem(newExpenseId, expenseJson);
     let expenseItem = JSON.parse(window.localStorage.getItem(newExpenseId));
-    console.log(expenseItem);
-
+    // console.log(expenseItem);
+    let concatStateArray = this.state.items.concat(expenseItem);
+    this.setState({items : concatStateArray});
   }
 
+  componentDidMount(){
+    this.displaySetState();
+  }
 
-  displayReceiver(){
+  displaySetState(){
     let itemList = Object.keys(window.localStorage).reduce(function(obj, str) {
     obj[str] = JSON.parse(window.localStorage.getItem(str));
-    return obj;}, []);
-    this.setState({items : item});
-    console.log(this.items);
-    //call from Display - set receiverfunction on Display
+    return obj;}, {});
+    const itemArray = Object.values(itemList);
+    this.setState({items : itemArray});
   };
 
   displayItemArray(){
-    let itemArray = Object.keys(window.localStorage).reduce(function(obj, str) {
+    let tempItemObj = Object.keys(window.localStorage).reduce(function(obj, str) {
       obj[str] = JSON.parse(window.localStorage.getItem(str));
       return obj;}, {});
-    console.log(itemArray);
-    console.log(Object.values(itemArray));
+    const itemArray = Object.values(tempItemObj);
+    const dateSortedArray = [...itemArray];
+    dateSortedArray.sort(function(a,b){
+      let c = new Date(a.inputdate);
+      let d = new Date(b.inputdate);
+      return d-c;
+      });
+    // console.log(dateSortedArray);
+    const itemList = dateSortedArray ? dateSortedArray.map(item => {return <ExpenseItem item={item} />; }) : null;
+    return itemList;
   }
 
 
 
   render(){
-
     const itemListDisplay = this.state.items ? <Display itemList = {this.state.items} /> : null;
+    console.log(this.state.items);
     return (
       <div>
-        <div>
-          <Form
-            receiver = {this.handleClickReceiver}
-          />
+        <div className="app-container">
+          <header>
+            <h1>Spender</h1>
+          </header>
+          <div>
+            <Form
+              receiver = {this.handleClickReceiver}
+            />
+          </div>
+          <div>
+            {itemListDisplay}
+          </div>
+          <div>
+            {this.displayItemArray()}  
+          </div>
         </div>
-        <div>
-          {itemListDisplay}
-        </div>
-        <div>
-          {this.displayItemArray()}  
-        </div>
-
-
       </div>
     );
   }

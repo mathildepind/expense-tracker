@@ -1,4 +1,5 @@
 import React from 'react';
+
 import ExpenseItem from './ExpenseItem';
 
 class Display extends React.Component {
@@ -20,9 +21,8 @@ class Display extends React.Component {
         <div>
           <h3>Total spending:</h3>
         </div>
-          {itemList}
         <div>
-          
+          {itemList}
         </div>
       </div>
     );

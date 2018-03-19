@@ -41,7 +41,7 @@ small, .font_small {font-size: 0.707em;}
   font-size: 24px;
   padding: 6px 12px;
   border-radius: 20%;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  /* box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); */
   cursor: pointer;
   float: left;
 }
@@ -66,25 +66,21 @@ small, .font_small {font-size: 0.707em;}
     }
 }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: 5px;
-  padding: 5px;
-}
-
-.grid-container > div {
-  /* background-color: rgba(255, 255, 255, 0.8); */
-  text-align: center;
-  padding: 5px 0;
-}
 .expense-amount {
   grid-column: 2;
   grid-row: 1 / 2;
 }
 
+
 * {
     box-sizing: border-box;
+}
+
+.app-container {
+  border-radius: 5px;
+  padding: 20px;
+  max-width: 600px;
+  position: relative;
 }
 
 .form-container {
@@ -96,16 +92,20 @@ small, .font_small {font-size: 0.707em;}
   position: absolute; */
 }
 
-.col-25 {
-    float: left;
-    width: 25%;
-    margin-top: 6px;
+.col-20 {
+  float: right;
+  width: 20%;
+  margin-top: 6px;
 }
 
-.col-75 {
-    float: left;
-    width: 75%;
-    margin-top: 6px;
+.col-40 {
+  float: left;
+  width: 40%;
+  margin-top: 6px;
+}
+
+.amount-text {
+  float: right;
 }
 
 input[type=date] {
@@ -140,6 +140,56 @@ input[type=text] {
   resize: vertical;
 }
 
-label {
+/* label {
   text-align: center
+} */
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 100px 220px 80px;
+  grid-gap: 10px;
+  grid-auto-rows: minmax(30px, auto);
+  padding-left: 20px;
+}
+
+.date-label {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.date-input {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.amount-label {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.amount-input {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.item-label {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.item-input {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.button-grid {
+  grid-column: 3;
+  grid-row: 1 / 4;
+  align-self: center;
+}
+
+.grid-form {
+  display: grid;
+  grid-template-columns: 100px 220px 80px;
+  grid-gap: 14px;
 }
