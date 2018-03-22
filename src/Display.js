@@ -15,7 +15,7 @@ class Display extends React.Component {
 
   render() {
     const {items} = this.props;
-    const itemList = items ? items.map(item => {return <ExpenseItem item={item} />; }) : null;
+    const itemList = items ? items.map(item => {return <ExpenseItem item={item} key={items[item]}/>; }) : null;
     return (
       <div>
         <div>
