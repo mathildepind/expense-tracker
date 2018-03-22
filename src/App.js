@@ -17,9 +17,8 @@ class App extends React.Component {
 
 
   handleClickReceiver(date,inputdate,amount,item){
-    // console.log("localStorage length: " + window.localStorage.length);
     let newExpenseId = window.localStorage.length + 1;
-    // console.log("newExpenseId: " + newExpenseId);
+    console.log(newExpenseId);
     const expenseJson = JSON.stringify({
       'date': date,
       'inputdate': inputdate,
@@ -27,7 +26,6 @@ class App extends React.Component {
       'description': item});
     window.localStorage.setItem(newExpenseId, expenseJson);
     let expenseItem = JSON.parse(window.localStorage.getItem(newExpenseId));
-    // console.log(expenseItem);
     let concatStateArray = this.state.items.concat(expenseItem);
     this.setState({items : concatStateArray});
   }
@@ -55,7 +53,6 @@ class App extends React.Component {
       let d = new Date(b.inputdate);
       return d-c;
       });
-    // console.log(dateSortedArray);
     const itemList = dateSortedArray ? dateSortedArray.map(item => {return <ExpenseItem item={item} />; }) : null;
     return itemList;
   }
